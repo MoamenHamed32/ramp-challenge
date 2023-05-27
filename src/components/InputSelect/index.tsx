@@ -49,7 +49,6 @@ export function InputSelect<TItem>({
       }) => {
         const toggleProps = getToggleButtonProps()
         const parsedSelectedItem = selectedItem === null ? null : parseItem(selectedItem)
-        // console.log(selectedValue)
         return (
           <div className="RampInputSelect--root">
             <label className="RampText--s RampText--hushed" {...getLabelProps()}>
