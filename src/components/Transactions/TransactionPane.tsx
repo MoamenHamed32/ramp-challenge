@@ -20,7 +20,7 @@ export const TransactionPane: TransactionPaneComponent = ({
       </div>
       <InputCheckbox
         id={transaction.id}
-        checked={approved}
+        initialValue={approved}
         disabled={loading}
         onChange={async (newValue) => {
           await consumerSetTransactionApproval({

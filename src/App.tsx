@@ -7,6 +7,7 @@ import { usePaginatedTransactions } from "./hooks/usePaginatedTransactions"
 import { useTransactionsByEmployee } from "./hooks/useTransactionsByEmployee"
 import { EMPTY_EMPLOYEE } from "./utils/constants"
 import { Employee } from "./utils/types"
+import { pageAmount } from "./utils/requests"
 
 export function App() {
   const { data: employees, ...employeeUtils } = useEmployees()
@@ -25,6 +26,7 @@ export function App() {
 
     await employeeUtils.fetchAll()
     await paginatedTransactionsUtils.fetchAll()
+    // displayedTransaction = displayedTransaction + paginatedTransactionsUtils
 
     setIsLoading(false)
   }, [employeeUtils, paginatedTransactionsUtils, transactionsByEmployeeUtils])
@@ -62,6 +64,9 @@ export function App() {
           })}
           onChange={async (newValue) => {
             if (newValue === null) {
+              return
+            } else if (newValue.id === "") {
+              loadAllTransactions()
               return
             }
 
