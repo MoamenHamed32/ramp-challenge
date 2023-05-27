@@ -1,5 +1,4 @@
 import { useCallback, useState } from "react"
-import { Transactions } from "src/components/Transactions"
 import { PaginatedRequestParams, PaginatedResponse, Transaction } from "../utils/types"
 import { PaginatedTransactionsResult } from "./types"
 import { useCustomFetch } from "./useCustomFetch"
