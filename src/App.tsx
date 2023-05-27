@@ -13,7 +13,7 @@ export function App() {
   const { data: paginatedTransactions, ...paginatedTransactionsUtils } = usePaginatedTransactions()
   const { data: transactionsByEmployee, ...transactionsByEmployeeUtils } = useTransactionsByEmployee()
   const [isLoading, setIsLoading] = useState(false)
-
+  const [nullPagination, setNullPagination] = useState(false)
   const transactions = useMemo(
     () => paginatedTransactions?.data ?? transactionsByEmployee ?? null,
     [paginatedTransactions, transactionsByEmployee]
@@ -24,7 +24,6 @@ export function App() {
     transactionsByEmployeeUtils.invalidateData()
 
     await employeeUtils.fetchAll()
-    // displayedTransaction = displayedTransaction + paginatedTransactionsUtils
 
     setIsLoading(false)
     await paginatedTransactionsUtils.fetchAll()
@@ -67,6 +66,8 @@ export function App() {
             } else if (newValue.id === "") {
               loadAllTransactions()
               return
+            } else if (newValue.id !== "") {
+              setNullPagination(true)
             }
 
             await loadTransactionsByEmployee(newValue.id)
@@ -78,17 +79,19 @@ export function App() {
         <div className="RampGrid">
           <Transactions transactions={transactions} />
 
-          {transactions !== null && (
-            <button
-              className="RampButton"
-              disabled={paginatedTransactionsUtils.loading}
-              onClick={async () => {
-                await loadAllTransactions()
-              }}
-            >
-              View More
-            </button>
-          )}
+          {transactions !== null &&
+            paginatedTransactions?.nextPage !== null &&
+            nullPagination === false && (
+              <button
+                className="RampButton"
+                disabled={paginatedTransactionsUtils.loading}
+                onClick={async () => {
+                  await loadAllTransactions()
+                }}
+              >
+                View More
+              </button>
+            )}
         </div>
       </main>
     </Fragment>

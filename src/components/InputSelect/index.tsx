@@ -29,7 +29,6 @@ export function InputSelect<TItem>({
     },
     [consumerOnChange]
   )
-
   return (
     <Downshift<TItem>
       id="RampSelect"
